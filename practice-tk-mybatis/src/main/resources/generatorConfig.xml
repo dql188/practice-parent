@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--  mvn mybatis-generator:generate-->
+<generatorConfiguration>
+    <!--指定一个需要在配置中解析使用的外部属性文件-->
+    <!--<properties resource="src/main/resources/conf/local/local.properties"/>-->
+    <!--希望不生成和Example查询有关的内容，那么可以按照如下进行配置:  targetRuntime="MyBatis3Simple"-->
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--<plugin>元素用来定义一个插件。插件用于扩展或修改通过MyBatis Generator (MBG)代码生成器生成的代码。-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.sxc.starter.mybatis.mapper.MyMapper"/>
+        </plugin>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://39.108.106.196:3306/practice-mybatis?characterEncoding=utf8"
+                        userId="root"
+                        password="12345"/>
+        <javaModelGenerator targetPackage="com.sxc.tk.mybatis.orm" targetProject="src/main/java"/>
+        <!--xml-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+        <!--mapper接口-->
+        <javaClientGenerator targetPackage="com.sxc.tk.mybatis.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+        <table tableName="practice_account" domainObjectName="Account">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="practice_user" domainObjectName="User">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
