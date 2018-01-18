@@ -1,5 +1,7 @@
 package com.sxc.tk.mybatis.conf;
 
+import com.sxc.tk.mybatis.mapper.MyMapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -19,5 +21,6 @@ import org.springframework.context.annotation.Configuration;
  * 2018/1/17    	          ZMM           1.0          1.0 Version
  */
 @Configuration
+@MapperScan(basePackages = "com.sxc.tk.mybatis.mapper",markerInterface = MyMapper.class)
 public class MainConfiguration {
 }
