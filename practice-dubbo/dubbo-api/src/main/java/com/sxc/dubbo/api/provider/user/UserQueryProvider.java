@@ -16,5 +16,5 @@ package com.sxc.dubbo.api.provider.user;
  * ------------------------------------------------------------------
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
-public class UserQueryProvider {
+public interface UserQueryProvider {
 }

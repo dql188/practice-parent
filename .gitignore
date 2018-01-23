@@ -28,3 +28,7 @@ gen
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/practice-dubbo/dubbo-account/dubbo-account.iml
+/practice-dubbo/dubbo-api/dubbo-api.iml
+/practice-dubbo/practice-dubbo.iml
+/practice-dubbo/dubbo-user/dubbo-user.iml
