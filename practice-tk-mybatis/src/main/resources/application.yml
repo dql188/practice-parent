@@ -9,7 +9,7 @@ spring:
 
 #mybatis
 mybatis:
-  type-aliases-package: com.sxc.tk.mybatis.orm
+  type-aliases-package: com.sxc.tk.mybatis.user
   mapper-locations: classpath:mapper/*.xml
 
 #mapper
