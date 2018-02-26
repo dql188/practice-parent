@@ -1,5 +1,9 @@
 package com.sxc.dubbo.api.result;
 
+import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * Description:
  *
@@ -16,5 +20,12 @@ package com.sxc.dubbo.api.result;
  * ------------------------------------------------------------------
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
-public class UserDTO {
+@Data
+public class UserDTO implements Serializable {
+
+    private Integer id;
+
+    private String username;
+
+    private Long account;
 }

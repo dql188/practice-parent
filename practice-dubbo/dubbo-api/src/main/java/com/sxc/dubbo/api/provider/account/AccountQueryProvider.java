@@ -17,4 +17,6 @@ package com.sxc.dubbo.api.provider.account;
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
 public interface AccountQueryProvider {
+
+    Long queryById(Integer id);
 }

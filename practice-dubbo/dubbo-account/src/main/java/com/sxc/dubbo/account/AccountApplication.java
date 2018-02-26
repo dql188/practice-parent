@@ -1,5 +1,9 @@
 package com.sxc.dubbo.account;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * Description:
  *
@@ -16,5 +20,10 @@ package com.sxc.dubbo.account;
  * ------------------------------------------------------------------
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
+@SpringBootApplication
 public class AccountApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AccountApplication.class, args);
+    }
 }

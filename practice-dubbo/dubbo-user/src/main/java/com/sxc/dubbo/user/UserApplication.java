@@ -2,6 +2,7 @@ package com.sxc.dubbo.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Description:
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
 @EnableAutoConfiguration
+@SpringBootApplication
 public class UserApplication {
 
     public static void main(String[] args) {
