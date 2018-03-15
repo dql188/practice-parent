@@ -1,17 +1,9 @@
 package com.sxc.practice.redis.lock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisCommands;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * Description:
@@ -19,7 +11,7 @@ import java.util.UUID;
  * @author: ZMM
  * @version: 1.0
  * Filename:    	RedisLock1
- * Create at:   	2018/3/8
+ * Create at:   	2018/3/15
  * <p>
  * Copyright:   	Copyright (c)2018
  * Company:     	songxiaocai
@@ -27,86 +19,53 @@ import java.util.UUID;
  * Modification History:
  * Date        		      Author          Version      Description
  * ------------------------------------------------------------------
- * 2018/3/8    	          ZMM           1.0          1.0 Version
+ * 2018/3/15    	          ZMM           1.0          1.0 Version
  */
 public class RedisLock1 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisLock1.class);
+    private final byte[] lockKey;
 
-    private String lockKey;
-
-    private String lockValue;
-
-    private static Integer EXPIRE_TIME = 60;
-
-    private static final Long TIME_OUT = 100L;
-
-    private volatile boolean isLock;
-
-    private static final String OK = "OK";
-
-    private StringRedisTemplate stringRedisTemplate;
-
-    public static final String unLockLua =
-            "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
-                    "then\n" +
-                    "    return redis.call(\"del\",KEYS[1])\n" +
-                    "else\n" +
-                    "    return 0\n" +
-                    "end";
-
-
-    public Boolean tryLock() {
-
-        Long nowTime = System.nanoTime();
-        lockValue = UUID.randomUUID().toString();
-        while (System.nanoTime() - nowTime <= TIME_OUT) {
-
-            if (OK.equalsIgnoreCase(set(lockKey, lockValue, EXPIRE_TIME))) {
-                LOGGER.info("得到锁");
-                isLock = true;
-                return isLock;
-            }
-        }
-        return isLock;
+    public RedisLock1(byte[] lockKey) {
+        this.lockKey = lockKey;
     }
 
-    public String set(String lockKey, String lockValue, Integer EXPIRE_TIME) {
-        stringRedisTemplate.opsForValue().set("","");
-        return stringRedisTemplate.execute((RedisCallback<String>) redisConnection -> {
-            Object connection = redisConnection.getNativeConnection();
-            String result = null;
-            if (connection instanceof JedisCluster) {
-                result = ((JedisCluster) connection).set(lockKey, lockValue, "NX", "EX", EXPIRE_TIME);
-            }
-            if (connection instanceof Jedis) {
-                result = ((Jedis) connection).set(lockKey, lockValue, "NX", "EX", EXPIRE_TIME);
-            }
-
-            return result;
-        });
-    }
-
-    public Boolean unLock() {
-        if (isLock) {
-            stringRedisTemplate.execute(new RedisCallback<Object>() {
-                @Override
-                public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
-                    Long result = null;
-
-                    Object connection = redisConnection.getNativeConnection();
-                    if (connection instanceof JedisCluster) {
-                        result = (Long) ((JedisCluster) connection).eval(unLockLua, Arrays.asList(lockKey), Arrays.asList(lockValue));
-                    }
-                    if (connection instanceof Jedis) {
-                        result = (Long) ((JedisCluster) connection).eval(unLockLua, Arrays.asList(lockKey), Arrays.asList(lockValue));
-                    }
-                    isLock = result == 0;
-                    return result == 1;
+    private boolean tryLock(RedisConnection conn, int lockSeconds) throws Exception {
+        long nowTime = System.currentTimeMillis();
+        System.nanoTime();
+        long expireTime = nowTime + lockSeconds * 1000 + 1000; // 容忍不同服务器时间有1秒内的误差
+        if (conn.setNX(lockKey, longToBytes(expireTime))) {
+            conn.expire(lockKey, lockSeconds);
+            return true;
+        } else {
+            byte[] oldValue = conn.get(lockKey);
+            if (oldValue != null && bytesToLong(oldValue) < nowTime) {
+                // 这个锁已经过期了，可以获得它
+                // PS: 如果setNX和expire之间客户端发生崩溃，可能会出现这样的情况
+                byte[] oldValue2 = conn.getSet(lockKey, longToBytes(expireTime));
+                if (Arrays.equals(oldValue, oldValue2)) {
+                    // 获得了锁
+                    conn.expire(lockKey, lockSeconds);
+                    return true;
+                } else {
+                    // 被别人抢占了锁(此时已经修改了lockKey中的值，不过误差很小可以忽略)
+                    return false;
                 }
-            });
+            }
         }
-
-        return isLock;
+        return false;
     }
+
+    public byte[] longToBytes(long value) {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.SIZE / Byte.SIZE);
+        buffer.putLong(value);
+        return buffer.array();
+    }
+
+    public long bytesToLong(byte[] bytes) {
+        if (bytes.length != Long.SIZE / Byte.SIZE) {
+            throw new IllegalArgumentException("wrong length of bytes!");
+        }
+        return ByteBuffer.wrap(bytes).getLong();
+    }
+
 }

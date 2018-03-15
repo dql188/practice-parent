@@ -67,6 +67,19 @@ public class RedisLock {
         return isLock;
     }
 
+
+    public Boolean tryLock1() {
+        Long nowTime = System.nanoTime();
+        Long timeOut = TIME_OUT * 10000;
+        //不断请求锁
+
+        if (stringRedisTemplate.opsForValue().setIfAbsent(lockKey, "LOCK")) {
+            isLock = true;
+            stringRedisTemplate.expire(lockKey, EXPIRE_TIME, TimeUnit.SECONDS);
+        }
+        return isLock;
+    }
+
     public void unlock() {
         if (isLock) {
             stringRedisTemplate.delete(lockKey);
