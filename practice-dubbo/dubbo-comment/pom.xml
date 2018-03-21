@@ -34,28 +34,22 @@
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-spancollector-http</artifactId>
             <version>3.9.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.zipkin.brave</groupId>
-                    <artifactId>brave-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>io.zipkin.brave</groupId>-->
-            <!--<artifactId>brave-web-servlet-filter</artifactId>-->
-            <!--<version>3.9.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>io.zipkin.brave</groupId>-->
-            <!--<artifactId>brave-apache-http-interceptors</artifactId>-->
-            <!--<version>3.9.0</version>-->
-        <!--</dependency>-->
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpclient</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-web-servlet-filter</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-apache-http-interceptors</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
