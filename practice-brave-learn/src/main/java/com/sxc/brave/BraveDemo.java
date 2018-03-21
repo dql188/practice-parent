@@ -38,7 +38,7 @@ public class BraveDemo {
         Tracing tracing = Tracing.newBuilder()
                 .localServiceName("demo1")
                 .spanReporter(reporter)
-                .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY,"user-name"))
+                .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY, "user-name"))
                 .currentTraceContext(ThreadContextCurrentTraceContext.create())
                 .build();
 
@@ -67,7 +67,8 @@ public class BraveDemo {
             span2Child2.finish();
         }
         span2.finish();
-
+        //如果立即结束的话 会出现信息还没有发送到zipkin的情况
+        //这样就只会出现一个span
         sleep(1000);
 
     }

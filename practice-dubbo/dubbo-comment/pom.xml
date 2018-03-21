@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>practice-dubbo</artifactId>
+        <groupId>com.sxc.practice</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dubbo-comment</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.3.3.RELEASE</spring.version>
+        <jetty.version>8.1.20.v20160902</jetty.version>
+        <brave.version>4.0.6</brave.version>
+        <zipkin-reporter.version>0.6.12</zipkin-reporter.version>
+        <fasterxml-jackson-version>2.4.1</fasterxml-jackson-version>
+        <dubbo-version>2.5.3</dubbo-version>
+    </properties>
+
+    <dependencies>
+
+        <!-- brave core -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-core</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-spancollector-http</artifactId>
+            <version>3.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.zipkin.brave</groupId>
+                    <artifactId>brave-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.zipkin.brave</groupId>-->
+            <!--<artifactId>brave-web-servlet-filter</artifactId>-->
+            <!--<version>3.9.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>io.zipkin.brave</groupId>-->
+            <!--<artifactId>brave-apache-http-interceptors</artifactId>-->
+            <!--<version>3.9.0</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.httpcomponents</groupId>-->
+            <!--<artifactId>httpclient</artifactId>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

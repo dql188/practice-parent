@@ -12,6 +12,7 @@
         <module>dubbo-user</module>
         <module>dubbo-account</module>
         <module>dubbo-api</module>
+        <module>dubbo-comment</module>
     </modules>
 
     <properties>
@@ -93,7 +94,19 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -104,5 +117,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        </pluginManagement>
     </build>
 </project>

@@ -15,5 +15,5 @@
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:annotation package="com.sxc.dubbo.user.application.service"/>
 
-    <dubbo:consumer version="${dubbo.version}"/>
+    <dubbo:consumer version="${dubbo.version}" filter="braveDubboFilter"/>
 </beans>

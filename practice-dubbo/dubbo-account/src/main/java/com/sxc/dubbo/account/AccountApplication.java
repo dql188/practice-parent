@@ -3,6 +3,7 @@ package com.sxc.dubbo.account;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Description:
@@ -21,6 +22,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 2018/1/23    	          ZMM           1.0          1.0 Version
  */
 @SpringBootApplication
+@ComponentScan("com.sxc.dubbo")
 public class AccountApplication {
 
     public static void main(String[] args) {
