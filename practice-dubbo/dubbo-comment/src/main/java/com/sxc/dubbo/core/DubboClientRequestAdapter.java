@@ -46,13 +46,13 @@ public class DubboClientRequestAdapter implements ClientRequestAdapter {
     @Override
     public void addSpanIdToRequest(SpanId spanId) {
         if (spanId == null) {
-            carrier.put("dubbo.trace.sampled", "0");
+            carrier.put(DubboTraceConstant.SAMPLED, "0");
         } else {
-            carrier.put("dubbo.trace.sampled", "1");
-            carrier.put("dubbo.trace.traceid", IdConversion.convertToString(spanId.traceId));
-            carrier.put("dubbo.trace.spanid", IdConversion.convertToString(spanId.spanId));
+            carrier.put(DubboTraceConstant.SAMPLED, "1");
+            carrier.put(DubboTraceConstant.TRACE_ID, IdConversion.convertToString(spanId.traceId));
+            carrier.put(DubboTraceConstant.SPAN_ID, IdConversion.convertToString(spanId.spanId));
             if (spanId.nullableParentId() != null) {
-                carrier.put("dubbo.trace.parentid", IdConversion.convertToString(spanId.parentId));
+                carrier.put(DubboTraceConstant.PARENT_SPAN_ID, IdConversion.convertToString(spanId.parentId));
             }
         }
     }
