@@ -1,5 +1,6 @@
 package com.sxc.dubbo.core;
 
+import com.alibaba.dubbo.rpc.Result;
 import com.github.kristofa.brave.ClientResponseAdapter;
 import com.github.kristofa.brave.KeyValueAnnotation;
 

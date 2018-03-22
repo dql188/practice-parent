@@ -29,11 +29,6 @@ import javax.annotation.PostConstruct;
 @Activate(group = {Constants.PROVIDER, Constants.CONSUMER})
 public class BraveDubboFilter implements Filter {
 
-    @PostConstruct
-    public void init() {
-        System.out.println("1111");
-    }
-
     private ClientRequestInterceptor clientRequestInterceptor;
 
     private ClientResponseInterceptor clientResponseInterceptor;
@@ -58,7 +53,6 @@ public class BraveDubboFilter implements Filter {
         /*
          * provider 应用相关信息
          */
-        Integer status = 200;
         if ("0".equals(invocation.getAttachment(DubboTraceConstant.SAMPLED))
                 || "false".equals(invocation.getAttachment(DubboTraceConstant.SAMPLED))) {
             return invoker.invoke(invocation);
@@ -68,30 +62,21 @@ public class BraveDubboFilter implements Filter {
             return invoker.invoke(invocation);
         }
         if (context.isConsumerSide()) {
-            System.out.println("consumer execute");
-            /*
-             * Client side
-             */
-            clientRequestInterceptor.handle(new DubboClientRequestAdapter(RpcContext.getContext(), methodName));
-            Result result = null;
+            clientRequestInterceptor.handle(new DubboClientRequestAdapter(RpcContext.getContext(), "fuck"));
+            Result result;
             try {
                 result = invoker.invoke(invocation);
-            } catch (RpcException e) {
-                status = 500;
-                throw e;
             } finally {
-                final DubboClientResponseAdapter clientResponseAdapter = new DubboClientResponseAdapter();
-                clientResponseInterceptor.handle(clientResponseAdapter);
+                clientResponseInterceptor.handle(new DubboClientResponseAdapter());
             }
             return result;
         } else if (context.isProviderSide()) {
-            System.out.println("provider execute");
             serverRequestInterceptor.handle(new DubboServerRequestAdapter(RpcContext.getContext(), methodName));
             Result result = null;
             try {
                 result = invoker.invoke(invocation);
             } finally {
-                serverResponseInterceptor.handle(new DubboServerResponseAdapter(status));
+                serverResponseInterceptor.handle(new DubboServerResponseAdapter());
             }
             return result;
         }
@@ -99,12 +84,12 @@ public class BraveDubboFilter implements Filter {
     }
 
     private boolean inject(RpcContext context) {
+//        Brave brave = ApplicationBeanHolder.getBean(Brave.class);
         Brave brave;
-
         if (context.isConsumerSide()) {
-            brave = new Brave.Builder("consumer").spanCollector(HttpSpanCollector.create("http://localhost:9411",new EmptySpanCollectorMetricsHandler())).build();
+            brave = new Brave.Builder("consumer").spanCollector(HttpSpanCollector.create("http://localhost:9411", new EmptySpanCollectorMetricsHandler())).build();
         } else {
-            brave = new Brave.Builder("provider").spanCollector(HttpSpanCollector.create("http://localhost:9411",new EmptySpanCollectorMetricsHandler())).build();
+            brave = new Brave.Builder("provider").spanCollector(HttpSpanCollector.create("http://localhost:9411", new EmptySpanCollectorMetricsHandler())).build();
         }
         if (brave == null) {
             return false;

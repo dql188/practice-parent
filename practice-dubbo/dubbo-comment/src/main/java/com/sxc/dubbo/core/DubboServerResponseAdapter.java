@@ -1,5 +1,6 @@
 package com.sxc.dubbo.core;
 
+import com.alibaba.dubbo.rpc.Result;
 import com.github.kristofa.brave.KeyValueAnnotation;
 import com.github.kristofa.brave.ServerResponseAdapter;
 
@@ -24,14 +25,9 @@ import java.util.Collections;
  */
 public class DubboServerResponseAdapter implements ServerResponseAdapter {
 
-    private Integer status;
-
-    public DubboServerResponseAdapter(Integer status) {
-        this.status = status;
-    }
 
     @Override
     public Collection<KeyValueAnnotation> responseAnnotations() {
-        return Collections.singleton(KeyValueAnnotation.create(DubboTraceConstant.STATUS_CODE, status.toString()));
+        return Collections.emptyList();
     }
 }

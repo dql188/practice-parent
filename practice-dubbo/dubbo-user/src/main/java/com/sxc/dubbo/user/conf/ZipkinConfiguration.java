@@ -36,7 +36,7 @@ public class ZipkinConfiguration {
 
     @Bean
     public Brave brave(SpanCollector spanCollector) {
-        return new Brave.Builder("service1")
+        return new Brave.Builder("user-service")
                 .spanCollector(spanCollector)
                 .traceSampler(Sampler.ALWAYS_SAMPLE)
                 .build();

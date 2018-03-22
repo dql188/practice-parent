@@ -26,6 +26,6 @@ public class AccountQueryProviderImpl implements AccountQueryProvider {
 
     @Override
     public Long queryById(Integer id) {
-        return new Random(Long.MAX_VALUE).nextLong();
+        return new Random().nextLong();
     }
 }

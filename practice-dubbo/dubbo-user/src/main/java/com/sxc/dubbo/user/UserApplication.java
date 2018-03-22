@@ -3,6 +3,7 @@ package com.sxc.dubbo.user;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Description:
@@ -22,6 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableAutoConfiguration
 @SpringBootApplication
+@ComponentScan("com.sxc.dubbo")
 public class UserApplication {
 
     public static void main(String[] args) {
