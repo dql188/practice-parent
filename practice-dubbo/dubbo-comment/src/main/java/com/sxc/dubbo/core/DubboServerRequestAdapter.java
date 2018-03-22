@@ -1,10 +1,7 @@
 package com.sxc.dubbo.core;
 
 import com.alibaba.dubbo.rpc.RpcContext;
-import com.github.kristofa.brave.KeyValueAnnotation;
-import com.github.kristofa.brave.ServerRequestAdapter;
-import com.github.kristofa.brave.SpanId;
-import com.github.kristofa.brave.TraceData;
+import com.github.kristofa.brave.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -57,8 +54,8 @@ public class DubboServerRequestAdapter implements ServerRequestAdapter {
     }
 
     static SpanId getSpanId(String traceId, String spanId, String parentSpanId) {
-        return SpanId.builder().traceId(Long.parseLong(traceId)).spanId(Long.parseLong(parentSpanId))
-                .parentId(parentSpanId == null ? null : Long.parseLong(parentSpanId)).build();
+        return SpanId.builder().traceId(IdConversion.convertToLong(traceId)).spanId(IdConversion.convertToLong(spanId))
+                .parentId(parentSpanId == null ? null : IdConversion.convertToLong(parentSpanId)).build();
     }
 
     @Override
