@@ -7,6 +7,7 @@ import com.github.kristofa.brave.SpanCollector;
 import com.github.kristofa.brave.http.DefaultSpanNameProvider;
 import com.github.kristofa.brave.http.HttpSpanCollector;
 import com.github.kristofa.brave.servlet.BraveServletFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,20 +35,18 @@ public class ZipkinConfiguration {
         return HttpSpanCollector.create("http://localhost:9411", new EmptySpanCollectorMetricsHandler());
     }
 
+/*
     @Bean
     public Brave brave(SpanCollector spanCollector) {
-        return new Brave.Builder("user-service")
+        return new Brave.Builder("web-service")
                 .spanCollector(spanCollector)
                 .traceSampler(Sampler.ALWAYS_SAMPLE)
                 .build();
     }
+*/
 
 
-    @Bean
-    public BraveServletFilter braveServletFilter(Brave brave) {
-        return new BraveServletFilter(brave.serverRequestInterceptor(),
-                brave.serverResponseInterceptor(), new DefaultSpanNameProvider());
-    }
+
 
 
 }

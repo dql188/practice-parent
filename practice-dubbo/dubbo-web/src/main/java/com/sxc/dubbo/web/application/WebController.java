@@ -1,6 +1,8 @@
 package com.sxc.dubbo.web.application;
 
+import com.github.kristofa.brave.Brave;
 import com.sxc.dubbo.api.result.UserDTO;
+import com.sxc.dubbo.core.ApplicationBeanHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,5 +34,10 @@ public class WebController {
     public UserDTO query(@PathVariable("id") Integer id) {
         UserDTO userDTO = webHandler.queryById(id);
         return userDTO;
+    }
+
+    @GetMapping(value = "/test")
+    public String test() {
+        return ApplicationBeanHolder.getBean(Brave.class).toString();
     }
 }

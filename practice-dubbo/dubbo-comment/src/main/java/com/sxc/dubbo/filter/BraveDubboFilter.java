@@ -84,13 +84,14 @@ public class BraveDubboFilter implements Filter {
     }
 
     private boolean inject(RpcContext context) {
-//        Brave brave = ApplicationBeanHolder.getBean(Brave.class);
-        Brave brave;
+
+        Brave brave = ApplicationBeanHolder.getBean(Brave.class);
+       /* Brave brave;
         if (context.isConsumerSide()) {
             brave = new Brave.Builder("consumer").spanCollector(HttpSpanCollector.create("http://localhost:9411", new EmptySpanCollectorMetricsHandler())).build();
         } else {
             brave = new Brave.Builder("provider").spanCollector(HttpSpanCollector.create("http://localhost:9411", new EmptySpanCollectorMetricsHandler())).build();
-        }
+        }*/
         if (brave == null) {
             return false;
         }

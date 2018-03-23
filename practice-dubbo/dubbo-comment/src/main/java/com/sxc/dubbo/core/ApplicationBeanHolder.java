@@ -3,6 +3,7 @@ package com.sxc.dubbo.core;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * Description:
@@ -20,6 +21,7 @@ import org.springframework.context.ApplicationContextAware;
  * ------------------------------------------------------------------
  * 2018/3/22    	          ZMM           1.0          1.0 Version
  */
+//@Component
 public class ApplicationBeanHolder implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;

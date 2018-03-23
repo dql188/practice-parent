@@ -2,6 +2,7 @@ package com.sxc.dubbo.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Description:
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 2018/3/23    	          ZMM           1.0          1.0 Version
  */
 @SpringBootApplication
+@ComponentScan("com.sxc.dubbo")
 public class Application {
 
     public static void main(String[] args) {

@@ -1,9 +1,13 @@
 package com.sxc.dubbo.account;
 
+import com.github.kristofa.brave.Brave;
+import com.sxc.dubbo.core.ApplicationBeanHolder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Description:
@@ -23,9 +27,15 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan("com.sxc.dubbo")
+@RestController
 public class AccountApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AccountApplication.class, args);
+    }
+
+    @GetMapping(value = "/test")
+    public String test(){
+        return ApplicationBeanHolder.getBean(Brave.class).toString();
     }
 }

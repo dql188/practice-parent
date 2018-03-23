@@ -5,3 +5,7 @@ dubbo.protocol.port: 2881
 dubbo.version: 1.0.0.daily
 server:
   port: 8100
+spring:
+  application:
+    name: web-service
+
