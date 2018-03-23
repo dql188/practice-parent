@@ -1,4 +1,4 @@
-package com.sxc.dubbo.user.conf;
+package com.sxc.dubbo.web.application.conf;
 
 import com.github.kristofa.brave.Brave;
 import com.github.kristofa.brave.EmptySpanCollectorMetricsHandler;

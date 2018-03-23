@@ -3,3 +3,5 @@ dubbo.zk.session.timeout: 180000
 dubbo.zk.connect.timeout: 30000
 dubbo.protocol.port: 2881
 dubbo.version: 1.0.0.daily
+server:
+  port: 8100

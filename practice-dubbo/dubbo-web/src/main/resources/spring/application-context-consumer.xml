@@ -13,9 +13,9 @@
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}"/>
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:annotation package="com.sxc.dubbo.user.application"/>
+    <dubbo:annotation package="com.sxc.dubbo"/>
 
-    <dubbo:provider version="${dubbo.version}" filter="braveDubboFilter"/>
+    <!--<dubbo:provider version="${dubbo.version}" filter="braveDubboFilter"/>-->
 
     <dubbo:consumer version="${dubbo.version}" filter="braveDubboFilter"/>
 

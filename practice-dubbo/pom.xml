@@ -13,6 +13,7 @@
         <module>dubbo-account</module>
         <module>dubbo-api</module>
         <module>dubbo-comment</module>
+        <module>dubbo-web</module>
     </modules>
 
     <properties>
