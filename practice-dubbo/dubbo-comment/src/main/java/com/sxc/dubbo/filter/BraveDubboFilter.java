@@ -57,12 +57,13 @@ public class BraveDubboFilter implements Filter {
                 || "false".equals(invocation.getAttachment(DubboTraceConstant.SAMPLED))) {
             return invoker.invoke(invocation);
         }
-        //注入
-        if (!inject(context)) {
+        //注入Bean
+        if (!inject()) {
             return invoker.invoke(invocation);
         }
         if (context.isConsumerSide()) {
-            clientRequestInterceptor.handle(new DubboClientRequestAdapter(RpcContext.getContext(), "fuck"));
+            System.out.println(context.getMethodName());
+            clientRequestInterceptor.handle(new DubboClientRequestAdapter(RpcContext.getContext(), methodName));
             Result result;
             try {
                 result = invoker.invoke(invocation);
@@ -71,6 +72,8 @@ public class BraveDubboFilter implements Filter {
             }
             return result;
         } else if (context.isProviderSide()) {
+            System.out.println(context.getMethodName());
+
             serverRequestInterceptor.handle(new DubboServerRequestAdapter(RpcContext.getContext(), methodName));
             Result result = null;
             try {
@@ -83,7 +86,7 @@ public class BraveDubboFilter implements Filter {
         return invoker.invoke(invocation);
     }
 
-    private boolean inject(RpcContext context) {
+    private boolean inject() {
 
         Brave brave = ApplicationBeanHolder.getBean(Brave.class);
        /* Brave brave;
