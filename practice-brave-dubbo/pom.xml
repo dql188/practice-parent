@@ -6,7 +6,36 @@
 
     <groupId>com.sxc.practice</groupId>
     <artifactId>practice-brave-dubbo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>backend</module>
+        <module>frontend</module>
+        <module>api</module>
+    </modules>
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
+        <dubbo.version>2.5.9</dubbo.version>
+        <lombok.version>1.16.14</lombok.version>
+        <zkclient.version>0.2</zkclient.version>
+        <zookeeper.version>3.4.9</zookeeper.version>
 
-    
+        <cloud.version>Camden.RELEASE</cloud.version>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 </project>
