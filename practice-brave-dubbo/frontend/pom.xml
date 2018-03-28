@@ -11,45 +11,24 @@
 
     <artifactId>frontend</artifactId>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-
-        <sleuth.version>2.0.0.M8</sleuth.version>
-    </properties>
-
     <dependencies>
+
+        <!-- Spring Boot dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- Sleuth automatically adds trace interceptors when in the classpath -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
-        <!-- Sends trace data to zipkin over http (defaults to http://localhost:9411/api/v2/spans) -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
-
 
         <dependency>
-            <groupId>com.alibaba.spring.boot</groupId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>2.0.0</version>
+            <version>0.1.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-dubbo-rpc</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-
-
 
         <dependency>
             <groupId>com.sxc.practice</groupId>
@@ -57,19 +36,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-sleuth</artifactId>
-                <version>${sleuth.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 </project>

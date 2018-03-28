@@ -1,4 +1,4 @@
-package com.sxc.practice;
+package com.sxc.practice.consumer;
 
 /**
  * Description:

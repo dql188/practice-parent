@@ -1,9 +1,7 @@
-package com.sxc.practice;
+package com.sxc.practice.consumer;
 
-import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Description:
@@ -22,8 +20,6 @@ import org.springframework.context.annotation.ComponentScan;
  * 2018/3/28    	          ZMM           1.0          1.0 Version
  */
 @SpringBootApplication
-//@ComponentScan(basePackages = {"com.sxc.good"})
-@EnableDubboConfiguration
 public class BackendApplication {
 
     public static void main(String[] args) {

@@ -1,9 +1,6 @@
-package com.sxc.practice;
+package com.sxc.practice.consumer;
 
 import com.alibaba.dubbo.config.annotation.Service;
-//import com.sxc.good.nocloud.GoodClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
@@ -23,16 +20,15 @@ import java.util.UUID;
  * ------------------------------------------------------------------
  * 2018/3/28    	          ZMM           1.0          1.0 Version
  */
-@Service(interfaceClass = HelloService.class)
-@Component
+@Service(version = "1.0.0",
+        application = "${dubbo.application.id}",
+        protocol = "${dubbo.protocol.id}",
+        registry = "${dubbo.registry.id}")
 public class Backend implements HelloService {
-//
-//    @Autowired
-//    GoodClient goodClient;
 
     @Override
     public String say() {
-        return "";
+        return UUID.randomUUID().toString();
 //        return goodClient.getAll().toString();
     }
 }

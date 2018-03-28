@@ -1,10 +1,8 @@
-package com.sxc.practice;
+package com.sxc.practice.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author: ZMM
  * @version: 1.0
- * Filename:    	frontend
+ * Filename:    	Controller
  * Create at:   	2018/3/28
  * <p>
  * Copyright:   	Copyright (c)2018
@@ -24,14 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
  * ------------------------------------------------------------------
  * 2018/3/28    	          ZMM           1.0          1.0 Version
  */
-@Component
-public class Frontend {
+@SpringBootApplication(scanBasePackages = "com.sxc.practice.consumer")
+public class FrontendApplication {
 
-    @Reference(url = "dubbo://127.0.0.1:20880")
-    HelloService helloService;
-
-   public String test(){
-       return helloService.say();
-   }
-
+    public static void main(String[] args) {
+        SpringApplication.run(FrontendApplication.class, args);
+    }
 }

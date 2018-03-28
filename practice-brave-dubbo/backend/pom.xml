@@ -25,36 +25,36 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- Sleuth automatically adds trace interceptors when in the classpath -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-sleuth</artifactId>-->
+            <!--<version>1.0.0.RELEASE</version>-->
+        <!--</dependency>-->
         <!-- Sends trace data to zipkin over http (defaults to http://localhost:9411/api/v2/spans) -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-sleuth-zipkin</artifactId>-->
+            <!--<version>1.0.0.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-feign</artifactId>-->
+           <!--<version>1.2.5.RELEASE</version>-->
+        <!--</dependency>-->
+
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-           <version>1.2.5.RELEASE</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.alibaba.spring.boot</groupId>
+            <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>2.0.0</version>
+            <version>0.1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-dubbo-rpc</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.zipkin.brave</groupId>-->
+            <!--<artifactId>brave-instrumentation-dubbo-rpc</artifactId>-->
+            <!--<version>RELEASE</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.sxc.practice</groupId>
@@ -69,7 +69,7 @@
         <!--</dependency>-->
     </dependencies>
 
-    <dependencyManagement>
+  <!--  <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -81,13 +81,15 @@
         </dependencies>
     </dependencyManagement>
 
-    <repositories>
+  -->  <repositories>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
                 <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
