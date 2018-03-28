@@ -23,7 +23,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableAutoConfiguration
 @SpringBootApplication
-@ComponentScan("com.sxc.dubbo")
+@ComponentScan(basePackages = {"com.sxc.dubbo","com.sxc.good"})
 public class UserApplication {
 
     public static void main(String[] args) {

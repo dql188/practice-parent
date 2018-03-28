@@ -36,7 +36,7 @@ public class WebHandler {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(id);
         userDTO.setUsername(userQueryProvider.queryName(id));
-        userDTO.setAccount(accountQueryProvider.queryById(id));
+//        userDTO.setAccount(accountQueryProvider.queryById(id));
         return userDTO;
     }
 }
