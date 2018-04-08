@@ -58,29 +58,6 @@
             <artifactId>zkclient</artifactId>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-core</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-spancollector-http</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-web-servlet-filter</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-apache-http-interceptors</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-
         <dependency>
             <groupId>com.springcloud.personal</groupId>
             <artifactId>personal-good-client</artifactId>

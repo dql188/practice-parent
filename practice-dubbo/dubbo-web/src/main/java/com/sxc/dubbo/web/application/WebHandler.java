@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
 public class WebHandler {
 
 
-    @Reference
-    private AccountQueryProvider accountQueryProvider;
+//    @Reference
+//    private AccountQueryProvider accountQueryProvider;
 
     @Reference
     private UserQueryProvider userQueryProvider;

@@ -1,4 +1,4 @@
-dubbo.zk.address: 192.168.0.65:2181
+dubbo.zk.address: 218.244.135.116:2181
 dubbo.zk.session.timeout: 180000
 dubbo.zk.connect.timeout: 30000
 dubbo.protocol.port: 2881

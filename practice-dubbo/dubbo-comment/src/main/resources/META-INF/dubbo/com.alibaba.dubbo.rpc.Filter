@@ -1,1 +1,1 @@
-braveDubboFilter=com.sxc.dubbo.filter.BraveDubboFilter
+myTracingFilter=com.sxc.dubbo.core.temp.MyTracingFilter

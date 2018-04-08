@@ -53,24 +53,20 @@
 
 
         <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-core</artifactId>
-            <version>3.9.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <version>1.2.0.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-spancollector-http</artifactId>
-            <version>3.9.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <version>1.2.0.RELEASE</version>
         </dependency>
+        <!-- Sends trace data to zipkin over http (defaults to http://localhost:9411/api/v2/spans) -->
         <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-web-servlet-filter</artifactId>
-            <version>3.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-apache-http-interceptors</artifactId>
-            <version>3.9.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+            <version>1.2.0.RELEASE</version>
         </dependency>
 
         <dependency>
