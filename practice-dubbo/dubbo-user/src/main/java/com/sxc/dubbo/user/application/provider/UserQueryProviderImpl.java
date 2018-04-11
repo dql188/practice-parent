@@ -3,6 +3,8 @@ package com.sxc.dubbo.user.application.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sxc.dubbo.api.provider.user.UserQueryProvider;
 import com.sxc.good.nocloud.GoodClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
@@ -26,11 +28,14 @@ import java.util.UUID;
 @Service
 public class UserQueryProviderImpl implements UserQueryProvider {
 
+    private static Logger logger = LoggerFactory.getLogger(UserQueryProviderImpl.class);
+
     @Autowired
     GoodClient goodClient;
 
     @Override
     public String queryName(Integer id) {
+        logger.info("userquery");
         System.out.println(goodClient.getAll());
         return UUID.randomUUID().toString();
     }

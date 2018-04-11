@@ -63,7 +63,7 @@ public class MyTracingFilter implements Filter {
 
 
         RpcContext rpcContext = RpcContext.getContext();
-        Span span = null;
+        Span span;
         String service = invoker.getInterface().getSimpleName();
         String method = RpcUtils.getMethodName(invocation);
         String spanName = service + "/" + method;
@@ -75,9 +75,9 @@ public class MyTracingFilter implements Filter {
             span.logEvent(Span.CLIENT_SEND);
             Result result;
             try {
-                result =  invoker.invoke(invocation);
+                result = invoker.invoke(invocation);
             } finally {
-                closeSpan(span,true);
+                closeSpan(span, true);
             }
             return result;
         } else {
@@ -97,10 +97,10 @@ public class MyTracingFilter implements Filter {
             }
             Result result;
             try {
-                result =  invoker.invoke(invocation);
+                result = invoker.invoke(invocation);
             } finally {
                 recordParentSpan(span);
-                closeSpan(span,false);
+                closeSpan(span, false);
             }
             return result;
         }
@@ -115,8 +115,6 @@ public class MyTracingFilter implements Filter {
             tracer.getCurrentSpan().logEvent(Span.SERVER_SEND);
             parent.stop();
             this.spanReporter.report(parent);
-        } else {
-
         }
     }
 
@@ -129,10 +127,7 @@ public class MyTracingFilter implements Filter {
 
     private void closeSpan(Span span, Boolean type) {
         if (type) {
-            System.out.println(span.getSavedSpan().logs());
             tracer.getCurrentSpan().logEvent(Span.CLIENT_RECV);
-        } else {
-
         }
         if (span != null) {
             if (LOGGER.isDebugEnabled()) {

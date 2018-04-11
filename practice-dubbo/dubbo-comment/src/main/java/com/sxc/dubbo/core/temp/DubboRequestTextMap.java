@@ -34,18 +34,6 @@ public class DubboRequestTextMap implements SpanTextMap {
     @Override
     public Iterator<Map.Entry<String, String>> iterator() {
         return this.delegate.getAttachments().entrySet().iterator();
-       /* final Iterator<Map.Entry<String, String>> iterator = this.delegate.getAttachments().entrySet().iterator();
-        return new Iterator<Map.Entry<String, String>>() {
-            @Override public boolean hasNext() {
-                return iterator.hasNext();
-            }
-
-            @Override public Map.Entry<String, String> next() {
-                Map.Entry<String, String> next = iterator.next();
-                List<String> value = Collections.singletonList(next.getValue());
-                return new AbstractMap.SimpleEntry<>(next.getKey(), value.isEmpty() ? "" : value.get(0));
-            }
-        };*/
     }
 
     @Override
