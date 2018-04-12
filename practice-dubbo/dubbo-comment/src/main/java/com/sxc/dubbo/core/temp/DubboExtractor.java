@@ -32,7 +32,7 @@ public class DubboExtractor implements SpanExtractor<SpanTextMap> {
     private static final org.apache.commons.logging.Log log = LogFactory.getLog(
             MethodHandles.lookup().lookupClass());
 
-    private static final String HTTP_COMPONENT = "http";
+    private static final String DUBBO_COMPONENT = "rpc";
 
     private static final DubboSpanMapper SPAN_CARRIER_MAPPER = new DubboSpanMapper();
 
@@ -51,6 +51,7 @@ public class DubboExtractor implements SpanExtractor<SpanTextMap> {
         boolean idToBeGenerated = debug && onlySpanIdIsPresent(carrier);
 
         if (!idToBeGenerated && traceIdIsMissing(carrier)) {
+            // can't build a Span without trace id
             return null;
         }
         try {
@@ -89,6 +90,13 @@ public class DubboExtractor implements SpanExtractor<SpanTextMap> {
         }
     }
 
+    /**
+     * build parent span from request
+     *
+     * @param carrier
+     * @param idToBeGenerated
+     * @return
+     */
     private Span buildParentSpan(Map<String, String> carrier, boolean idToBeGenerated) {
         String traceId = carrier.get(Span.TRACE_ID_NAME);
         if (traceId == null) {
@@ -102,8 +110,7 @@ public class DubboExtractor implements SpanExtractor<SpanTextMap> {
         if (StringUtils.hasText(parentName)) {
             span.name(parentName);
         } else {
-            span.name(HTTP_COMPONENT + ":/parent"
-                    + carrier.get(DubboSpanMapper.URI_HEADER));
+            span.name(DUBBO_COMPONENT + ":/parent unknown");
         }
         String processId = carrier.get(Span.PROCESS_ID_NAME);
         if (StringUtils.hasText(processId)) {
@@ -115,12 +122,7 @@ public class DubboExtractor implements SpanExtractor<SpanTextMap> {
         }
         span.remote(true);
 
-//        boolean skip = this.skipPattern
-//                .matcher(carrier.get(DubboSpanMapper.URI_HEADER)).matches()
-//                || Span.SPAN_NOT_SAMPLED.equals(carrier.get(Span.SAMPLED_NAME));
         boolean skip = false;
-        // trace, span id were retrieved from the headers and span is sampled
-        span.exportable(!(skip || idToBeGenerated));
         boolean debug = Span.SPAN_SAMPLED.equals(carrier.get(Span.SPAN_FLAGS));
         if (debug) {
             span.exportable(true);

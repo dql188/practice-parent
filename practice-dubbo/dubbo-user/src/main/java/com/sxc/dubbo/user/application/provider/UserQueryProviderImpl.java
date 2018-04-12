@@ -36,7 +36,7 @@ public class UserQueryProviderImpl implements UserQueryProvider {
     @Override
     public String queryName(Integer id) {
         logger.info("userquery");
-        System.out.println(goodClient.getAll());
+//        System.out.println(goodClient.getAll());
         return UUID.randomUUID().toString();
     }
 }

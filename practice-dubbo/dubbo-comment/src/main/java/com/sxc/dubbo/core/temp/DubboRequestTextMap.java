@@ -2,8 +2,11 @@ package com.sxc.dubbo.core.temp;
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import org.springframework.cloud.sleuth.SpanTextMap;
+import org.springframework.cloud.sleuth.instrument.web.ZipkinHttpSpanExtractor;
 import org.springframework.util.StringUtils;
+import org.springframework.web.util.UrlPathHelper;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 

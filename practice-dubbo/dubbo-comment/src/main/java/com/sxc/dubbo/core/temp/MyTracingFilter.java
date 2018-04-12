@@ -13,6 +13,7 @@ import org.springframework.cloud.sleuth.SpanReporter;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.cloud.sleuth.instrument.web.HttpTraceKeysInjector;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
+import org.springframework.cloud.sleuth.sampler.NeverSampler;
 
 import java.util.Collections;
 
@@ -38,19 +39,23 @@ public class MyTracingFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTracingFilter.class);
 
-    protected void addRequestTags(RpcContext context) {
-        this.httpTraceKeysInjector.addRequestTags(context.getUrl().getAddress(),
-                context.getUrl().getHost(),
-                context.getUrl().getPath(),
-                context.getMethodName(),
-                Collections.emptyMap());
-    }
+    private static final String DUBBO_COMPONENT = "rpc";
 
-    HttpTraceKeysInjector httpTraceKeysInjector;
     Tracer tracer;
     DubboExtractor dubboExtractor;
     DubboInject injector;
     SpanReporter spanReporter;
+    HttpTraceKeysInjector httpTraceKeysInjector;
+
+
+    protected void addRequestTags(RpcContext context) {
+        this.httpTraceKeysInjector.addRequestTags(
+                context.getUrl().getPath() + "/" + context.getMethodName(),
+                context.getUrl().getHost(),
+                context.getUrl().getPath(),
+                context.getUrl().getProtocol(),
+                Collections.emptyMap());
+    }
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
@@ -61,14 +66,10 @@ public class MyTracingFilter implements Filter {
             injectBean();
         }
 
-
         RpcContext rpcContext = RpcContext.getContext();
         Span span;
-        String service = invoker.getInterface().getSimpleName();
-        String method = RpcUtils.getMethodName(invocation);
-        String spanName = service + "/" + method;
+        String spanName = DUBBO_COMPONENT + ":/" + invoker.getInterface().getSimpleName() + "/" + RpcUtils.getMethodName(invocation);
         if (rpcContext.isConsumerSide()) {
-
             span = tracer.createSpan(spanName);
             injector.inject(span, new DubboRequestTextMap(RpcContext.getContext()));
             addRequestTags(RpcContext.getContext());
@@ -76,16 +77,21 @@ public class MyTracingFilter implements Filter {
             Result result;
             try {
                 result = invoker.invoke(invocation);
+                span.logEvent(Span.CLIENT_RECV);
             } finally {
-                closeSpan(span, true);
+                closeSpan(span);
             }
             return result;
         } else {
             Span parentSpan = dubboExtractor.joinTrace(new DubboRequestTextMap(RpcContext.getContext()));
             if (parentSpan != null) {
+                //FIXME
                 span = parentSpan;
                 tracer.continueSpan(span);
-                span.logEvent(Span.SERVER_RECV);
+                if (span.isRemote()) {
+                    span.logEvent(Span.SERVER_RECV);
+                }
+                addClassTag(span, invocation, invoker);
             } else {
                 String header = RpcContext.getContext().getAttachment(Span.SPAN_FLAGS);
                 if (Span.SPAN_SAMPLED.equals(header)) {
@@ -93,18 +99,34 @@ public class MyTracingFilter implements Filter {
                 } else {
                     span = tracer.createSpan(spanName);
                 }
+                addRequestTags(RpcContext.getContext());
+                addClassTag(span, invocation, invoker);
                 span.logEvent(Span.SERVER_RECV);
             }
             Result result;
             try {
                 result = invoker.invoke(invocation);
+            } catch (Exception e) {
+                addErrorTag(span, e);
+                throw e;
             } finally {
                 recordParentSpan(span);
-                closeSpan(span, false);
+                closeSpan(span);
             }
             return result;
         }
+    }
 
+    private void addClassTag(Span span, Invocation invocation, Invoker invoker) {
+        span.tag("provider.name", invoker.getInterface().getSimpleName());
+        span.tag("provider.methodName", RpcUtils.getMethodName(invocation));
+    }
+
+    private void addErrorTag(Span span, Exception e) {
+        if (e instanceof RpcException) {
+            span.tag("dubbo.error,code", Integer.toString(((RpcException) e).getCode()));
+        }
+        span.tag("error", e.getMessage());
     }
 
     private void recordParentSpan(Span parent) {
@@ -125,10 +147,7 @@ public class MyTracingFilter implements Filter {
         spanReporter = ApplicationBeanHolder.getBean(SpanReporter.class);
     }
 
-    private void closeSpan(Span span, Boolean type) {
-        if (type) {
-            tracer.getCurrentSpan().logEvent(Span.CLIENT_RECV);
-        }
+    private void closeSpan(Span span) {
         if (span != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Closing Dubbo span " + span);
