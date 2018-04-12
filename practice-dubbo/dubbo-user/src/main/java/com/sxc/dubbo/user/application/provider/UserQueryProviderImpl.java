@@ -6,6 +6,7 @@ import com.sxc.good.nocloud.GoodClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.UUID;
 
@@ -28,6 +29,9 @@ import java.util.UUID;
 @Service
 public class UserQueryProviderImpl implements UserQueryProvider {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private static Logger logger = LoggerFactory.getLogger(UserQueryProviderImpl.class);
 
     @Autowired
@@ -36,6 +40,8 @@ public class UserQueryProviderImpl implements UserQueryProvider {
     @Override
     public String queryName(Integer id) {
         logger.info("userquery");
+//        System.out.println(jdbcTemplate.queryForObject("Select NOW()",String.class));
+        System.out.println(jdbcTemplate.queryForMap("Select * FROM practice_user where id  = 1"));
 //        System.out.println(goodClient.getAll());
         return UUID.randomUUID().toString();
     }
