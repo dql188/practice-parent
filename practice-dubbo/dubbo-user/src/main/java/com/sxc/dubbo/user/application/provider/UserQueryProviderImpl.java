@@ -41,8 +41,8 @@ public class UserQueryProviderImpl implements UserQueryProvider {
     public String queryName(Integer id) {
         logger.info("userquery");
 //        System.out.println(jdbcTemplate.queryForObject("Select NOW()",String.class));
-        System.out.println(jdbcTemplate.queryForMap("Select * FROM practice_user where id  = 1"));
-//        System.out.println(goodClient.getAll());
+        System.out.println(jdbcTemplate.queryForMap("Select * FROM sxc_user where id  = 56"));
+        System.out.println(goodClient.getAll());
         return UUID.randomUUID().toString();
     }
 }
